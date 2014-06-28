@@ -16,6 +16,7 @@ import commands
 import json
 import sys
 import re
+from math import floor, ceil
 
 comm = MPI.COMM_WORLD
 rank = comm.Get_rank()
@@ -30,9 +31,20 @@ size = comm.size
 
 sheets = parallelpdf2string(comm=comm, path=path)
 
+# se puede calcular el rango de saltos correspondiente a cada procesador, de
+# esta manera no desperdiciar recursos, mediante una mejor estrategia de
+# balanceo de la carga, esa es la última mejora en terminos de estrategia de 
+# paralelizacion.
+
+#buscamos la palabra mas corta de las que se tienen
+max_len = min(map(len,words))
+
+j = lambda x: int(ceil((floor((len(x) -max_len )/(max_len-1)) + 1)/size))
+
+
 match = [[{'page':page, 'jump':r + 1, 'position':get_pattern(text=sheet, rank=r, regex=regex)}
-           for r in range(rank * 200, (rank + 1) * 200)] for page, sheet in enumerate(sheets)]
-   
+           for r in range(rank * j(sheet), (rank + 1) * j(sheet))] for page, sheet in enumerate(sheets)]
+match = sum(match, [])
 match = comm.gather(match, root=master)
 
 if rank == master:
