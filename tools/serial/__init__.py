@@ -71,20 +71,16 @@ def clearMatch(match, sheets, ncol, words):
         
         for n in m['position']:
             u = {}
-            u['position'] = n[1]
+            u['position'] = [n[1]]
             u['jump'] = m['jump']
             u['word'] = n[0]
             u['time'] = n[2]
             u['page'] = m['page']
+            u['n'] = 1
+            u['word_lengh'] = len(u['word'])
             match_temp.append(u)
     
     match = match_temp
-    for m in match:
-        m['position'] = [m['position']]
-    
-
-    for m in match:
-        m['word_lengh'] = len(m['word'])
 
 
     match = [m for m in match if m['position'] != []]
@@ -109,5 +105,8 @@ def clearMatch(match, sheets, ncol, words):
              'match':match,
              'nhojas':nhojas,
              'words':words,
+             'scatter':scatter,
+             'performance':performance,
+             'series':series,
              }
     return info
