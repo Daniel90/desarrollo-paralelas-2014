@@ -2,7 +2,7 @@
 '''
 Created on 14-05-2014
 
-@author: leonardo jofre
+@author: equipo de desarrollo
 '''
 from mpi4py import MPI
 from time import time
@@ -14,7 +14,9 @@ import os
 import commands
 import json
 import sys
+import re
 from tools import removeInvalidChar
+from math import floor, ceil
 
 comm = MPI.COMM_WORLD
 rank = comm.Get_rank()
@@ -24,11 +26,17 @@ path, words = (sys.argv[1], sys.argv[2])
 words = removeInvalidChar(words)
 words = words.lower().split()
 words = words + [w[::-1] for w in words]
+regex = re.compile("|".join(words))
+
 ncol = 60
 sheets = parallelpdf2string(comm=comm, path=path)
-match = [[[{'word':w, 'page':page, 'jump':r + 1, 'position':get_pattern(text=sheet, rank=r, word=w)}
-           for r in range(rank * len(sheet)/(size*len(w)), (rank + 1) * len(sheet)/(size*len(w)))] for w in words ] for page, sheet in enumerate(sheets)]
-match = sum(match, [])
+max_len = min(map(len,words))
+
+j = lambda x: int(ceil((floor((len(x) -max_len )/(max_len-1)) + 1)/size))
+
+
+match = [[{'page':page, 'jump':r + 1, 'position':get_pattern(text=sheet, rank=r, regex=regex)}
+           for r in range(rank * j(sheet), (rank + 1) * j(sheet))] for page, sheet in enumerate(sheets)]
 match = sum(match, [])
 match = comm.gather(match, root=master)
 
