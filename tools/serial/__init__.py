@@ -65,6 +65,22 @@ def get_pattern(text, rank, regex):
 def clearMatch(match, sheets, ncol, words):
     """elimina elementos repetidos y agrega informacion adicional"""
     match = sum(match, [])
+
+    match_temp = []
+    for m in match:
+        
+        for n in m['position']:
+            u = {}
+            u['position'] = n[1]
+            u['jump'] = m['jump']
+            u['word'] = n[0]
+            u['time'] = n[2]
+            u['page'] = m['page']
+            match_temp.append(u)
+    
+    match = match_temp
+    for m in match:
+        m['position'] = [m['position']]
     
 
     for m in match:

@@ -1,20 +1,4 @@
-n1 slots=4 #nodo maestro
-n2 slots=4 #nodo esclavo 1
-n3 slots=4 #nodo esclavo 1
-n4 slots=4 #nodo esclavo 1
-n5 slots=4 #nodo esclavo 1
-n6 slots=4 #nodo esclavo 1
-n7 slots=4 #nodo esclavo 1
-n8 slots=4 #nodo esclavo 1
-n9 slots=4 #nodo esclavo 1
-n10 slots=4 #nodo esclavo 1
-n11 slots=4 #nodo esclavo 1
-n12 slots=4 #nodo esclavo 1
-n13 slots=4 #nodo esclavo 1
-n14 slots=4 #nodo esclavo 1
-n15 slots=4 #nodo esclavo 1
-n16 slots=2 #nodo esclavo 1
-n17 slots=2 #nodo esclavo 1
+hostfile slots=4
 
 
 
