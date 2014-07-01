@@ -364,8 +364,26 @@ li a:hover {
 	padding-right: 5px;
 }
 
+span{
+	padding: 5px;
+	font-family: Arial, Sans-Serif;
+	font-size: 15px;
+	font-weight: bold;
+	text-align: center;
+	background-color: #0F5B7F;
+	
+	color: white;
+}
 
+#frase{
+	margin-bottom: 10px;
+	margin-top: 10px;
+}
 
+a{
+	color: white;
+}
 
-
-
+.celda{
+	color: black;
+}
