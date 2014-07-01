@@ -64,7 +64,10 @@ if (isset($_FILES['archivo']) && !empty($_FILES['archivo']['name']) && !empty($_
 		success: function(data){
 					info = jQuery.parseJSON(data);
 					$("#ajax_loading").hide();
-					$('#Resultado').html(drawTable(info.match));
+					var nombre = "<?php echo $nombre?>";
+					var ruta = "/subidas/"+nombre;
+					$('#Resultado').html(drawPhrase(info.words, ruta, nombre) + drawTable(info.match, ruta));
+					//$('#Resultado').html(drawTable(info.match));
 					
 					/*
 					$('#Resultado').html(book(info.nhojas));
